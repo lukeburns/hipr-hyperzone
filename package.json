@@ -9,23 +9,24 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lukeburns/hip5-hyperzone.git"
+    "url": "git+https://github.com/lukeburns/hipr-hyperzone.git"
   },
   "keywords": [
     "hyperzone",
-    "hip5"
+    "hip5",
+    "hns"
   ],
   "author": "Luke Burns",
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/lukeburns/hip5-hyperzone/issues"
+    "url": "https://github.com/lukeburns/hipr-hyperzone/issues"
   },
-  "homepage": "https://github.com/lukeburns/hip5-hyperzone#readme",
+  "homepage": "https://github.com/lukeburns/hipr-hyperzone#readme",
   "dependencies": {
     "@hyperswarm/replicator": "github:lukeburns/replicator",
     "bns": "^0.15.0",
     "bs32": "^0.1.6",
     "hipr": "^0.1.4",
-    "hyperzone": "^0.2.0"
+    "hyperzone": "^0.2.5"
   }
 }
