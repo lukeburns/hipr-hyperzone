@@ -1,0 +1,31 @@
+{
+  "name": "hipr-hyperzone",
+  "version": "0.1.0",
+  "description": "hip5 middleware for hyperzones",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lukeburns/hip5-hyperzone.git"
+  },
+  "keywords": [
+    "hyperzone",
+    "hip5"
+  ],
+  "author": "Luke Burns",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/lukeburns/hip5-hyperzone/issues"
+  },
+  "homepage": "https://github.com/lukeburns/hip5-hyperzone#readme",
+  "dependencies": {
+    "@hyperswarm/replicator": "github:lukeburns/replicator",
+    "bns": "^0.15.0",
+    "bs32": "^0.1.6",
+    "hipr": "^0.1.4",
+    "hyperzone": "^0.2.0"
+  }
+}
