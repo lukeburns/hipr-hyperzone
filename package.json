@@ -1,6 +1,6 @@
 {
   "name": "hipr-hyperzone",
-  "version": "0.1.1",
+  "version": "0.1.4",
   "description": "hip5 middleware for hyperzones",
   "main": "index.js",
   "scripts": {

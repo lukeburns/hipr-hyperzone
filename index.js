@@ -2,7 +2,7 @@ const HOME = require('os').homedir()
 
 const base32 = require('bs32')
 const { Zone, wire, dnssec } = require('bns')
-const { SOARecord, Record, codes } = wire
+const { SOARecord, Record, codes, types } = wire
 const Replicator = require('@hyperswarm/replicator')
 const Hyperzone = require('hyperzone')
 
@@ -42,10 +42,14 @@ function middleware (dir) {
   }
 
   return {
-    hostname: ':data.:protocol(_hyper|ns.direct).', 
-    handler: async ({ protocol, data }, name, type) => {
+    hostname: ':data.:protocol(_hyper|_hyperzone|hyperzone|ns.direct).', 
+    handler: async ({ protocol, data }, name, type, response) => {
+      if (name.indexOf(protocol) > 0) {
+        return null
+      }
+
       console.log(`${name} ${type}`)
-      console.log(`  ${protocol} ${data}`)
+      console.log(`   > ${protocol} ${data}`)
 
       for (const [origin, zone] of zones.entries()) {
         const s = name.split(origin)
@@ -61,18 +65,14 @@ function middleware (dir) {
         if (zone.origin) {
           const origin = await zone.origin()
           if (origin) {
-            const res = zone.resolve(name, type)
-            return res
-          } else {
-            const res = empty.resolve(name, type)
-            res.code = codes.SERVFAIL // servfail if we don't have the data yet
-            return res
+            return await zone.resolve(name, type)
           }
-        } else {
-          // just a promise
         }
+        const res = empty.resolve(name, types[type])
+        res.code = codes.SERVFAIL // ensure response not cached
+        return res
       } else {
-        return rc.res
+        return response
       }
     }
   }
