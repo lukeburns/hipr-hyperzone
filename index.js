@@ -15,7 +15,7 @@ function middleware (dir) {
   const hyperzoneOpts = { sparse: true, alwaysUpdate: true }
   const replicatorOpts = { client: true, server: true }
   const replicator = new Replicator()
-  replicator.on('connection', () => console.log('> connection'))
+  replicator.on('connection', () => console.log('[hyperzone] connection')) // todo: fix leaks
 
   const add = (key, opts) => {
     const buf = base32.decode(key)
@@ -47,9 +47,6 @@ function middleware (dir) {
       if (name.indexOf(protocol) > 0) {
         return null
       }
-
-      console.log(`${name} ${type}`)
-      console.log(`   > ${protocol} ${data}`)
 
       for (const [origin, zone] of zones.entries()) {
         const s = name.split(origin)
