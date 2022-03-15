@@ -42,7 +42,7 @@ function middleware (dir) {
   }
 
   return {
-    hostname: ':data.:protocol(_hyper|_hyperzone|hyperzone|ns.direct).', 
+    hostname: ':data.:protocol(_hyper|_hyperzone|hyperzone|ns.direct).:gateway?.', 
     handler: async ({ protocol, data }, name, type, response) => {
       if (name.indexOf(protocol) > 0) {
         return null
