@@ -8,11 +8,18 @@ First install the [`hipr` CLI](https://github.com/lukeburns/hipr#cli-usage), the
 npm i --prefix ~/.hipr hipr-hyperzone
 ```
 
-Now you can run `hipr` with `hipr-hyperzone` middleware:
+Now you can run a `hipr` recursive nameserver with `hipr-hyperzone` middleware:
 
 ```
 hipr hipr-hyperzone
 ```
+
+which resolves hyperzones! You can `npm i -g hyperzone` to install the [`hyperzone`](https://github.com/lukeburns/hyperzone) CLI for managing and replicating zones, e.g. `hyperzone example.com.`
+
+## Example
+
+```
+dig 
 
 ## Library Usage
 
