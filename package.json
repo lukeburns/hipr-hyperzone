@@ -1,6 +1,6 @@
 {
   "name": "hipr-hyperzone",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "hip5 middleware for hyperzones",
   "main": "index.js",
   "scripts": {
@@ -26,7 +26,7 @@
     "@hyperswarm/replicator": "github:lukeburns/replicator",
     "bs32": "^0.1.6",
     "hipr": "^0.1.4",
-    "hyperzone": "^0.2.5"
+    "hyperzone": "^0.2.8"
   },
   "peerDependencies": {
     "bns": "^0.15.0"
