@@ -51,7 +51,7 @@ function middleware (dir) {
       for (const [origin, zone] of zones.entries()) {
         const s = name.split(origin)
         if (!s[s.length - 1]) {
-          return zone.resolve(name, type)
+          return await zone.resolve(name, type)
         }
       }
 
