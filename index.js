@@ -43,7 +43,7 @@ function middleware (dir) {
 
   return {
     hostname: ':data.:protocol(_hyperzone|hyperzone).:gateway?.',
-    handler: async ({ protocol, data }, name, type, response) => {
+    handler: async ({ protocol, data }, name, type, response, rc, ns) => {
       if (name.indexOf(protocol) > 0) {
         return null;
       }
@@ -62,7 +62,7 @@ function middleware (dir) {
         if (zone.origin) {
           const origin = await zone.origin();
           if (origin) {
-            return await zone.resolve(name, type);
+            return await zone.resolve(name, type, ns.name);
           }
         }
         const res = empty.resolve(name, types[type]);
