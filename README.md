@@ -16,11 +16,6 @@ hipr hipr-hyperzone
 
 which resolves hyperzones! You can `npm i -g hyperzone` to install the [`hyperzone`](https://github.com/lukeburns/hyperzone) CLI for managing and replicating zones, e.g. `hyperzone example.com.`
 
-## Example
-
-```
-dig 
-
 ## Library Usage
 
 You can also use `hipr-hyperzone` as a library, if you're rigging up your own `hipr` resolver.
