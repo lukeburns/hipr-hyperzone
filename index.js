@@ -21,6 +21,7 @@ function middleware (dir) {
   replicator.on('connection', (socket, info) => {
     console.log('[hyperzone] connection @', base32.encode(info.publicKey));
   });
+  replicator.on('error', err => console.error('[hyperzone] replication error :', err.message))
   replicator.on('delete', (info) => {
     console.log('[hyperzone] closed @', base32.encode(info.publicKey));
   });
@@ -43,7 +44,7 @@ function middleware (dir) {
         buf = Buffer.from(key, 'hex');
         key = base32.encode(buf);
       } else {
-	return;
+        return;
       }
     } else if (Buffer.isBuffer(key)) {
       buf = key;
@@ -65,7 +66,8 @@ function middleware (dir) {
       zone = new Hyperzone(storage, buf, opts);
       zones.set(key, zone);
       resolve(zone);
-      replicator.add(zone.db, replicatorOpts);
+      replicator.add(zone.db, replicatorOpts)
+        .catch(err => console.error('[hyperzone] replication error :', (err.message || '').toLowerCase()));
       await zone.ready();
       const origin = await zone.origin();
       zones.set(origin, zone);
