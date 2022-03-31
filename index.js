@@ -39,9 +39,11 @@ function middleware (dir) {
     if (typeof key === 'string') {
       if (key.length === 52) {
         buf = base32.decode(key);
-      } else {
+      } else if (key.length === 64) {
         buf = Buffer.from(key, 'hex');
         key = base32.encode(buf);
+      } else {
+	return;
       }
     } else if (Buffer.isBuffer(key)) {
       buf = key;
