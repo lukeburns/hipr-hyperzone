@@ -21,10 +21,11 @@ which resolves hyperzones! You can `npm i -g hyperzone` to install the [`hyperzo
 You can also use `hipr-hyperzone` as a library, if you're rigging up your own `hipr` resolver.
 
 ```js
-const { RecursiveServer } = require('hipr')
+const { AuthServer } = require('hipr')
 const hyperzone = require('hipr-hyperzone')
 
-const server = new RecursiveServer(options)
+const server = new AuthServer(options)
+server.resolver.setServers(['127.0.0.1:5349']) // root hsd stub
 server.use(hyperzone())
 server.bind(53)
 ```
