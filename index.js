@@ -21,7 +21,7 @@ function middleware (dir) {
   replicator.on('connection', (socket, info) => {
     console.log('[hyperzone] connection @', base32.encode(info.publicKey));
   });
-  replicator.on('error', err => console.error('[hyperzone] replication error :', err.message))
+  replicator.on('error', err => console.error('[hyperzone] replication error :', err.message));
   replicator.on('delete', (info) => {
     console.log('[hyperzone] closed @', base32.encode(info.publicKey));
   });
@@ -94,8 +94,10 @@ function middleware (dir) {
       for (const [origin, zone] of zones.entries()) {
         if (origin === ns.name) {
           const res = await zone.resolve(name, type, origin);
-          await handleCache(zone, res, name, type, origin, rc, this.cache)
-          return res
+          try {
+            await handleCache(zone, res, name, type, origin, rc, this.cache);
+          } catch (err) {}
+          return res;
         }
       }
 
@@ -111,8 +113,10 @@ function middleware (dir) {
             //   clear cache_entry if new data
 
             const res = await zone.resolve(name, type, ns.name);
-            await handleCache(zone, res, name, type, origin, rc, this.cache)
-            return res
+            try {
+              await handleCache(zone, res, name, type, origin, rc, this.cache);
+            } catch (err) {}
+            return res;
           }
         }
         const res = empty.resolve(name, types[type]);
@@ -128,20 +132,20 @@ function middleware (dir) {
 module.exports = middleware;
 
 async function handleCache (zone, res, name, type, origin, rc, cache) {
+  if (!rc.cacheHandlers) return;
   rc.cacheHandlers.push(id => {
-
-    const oldData = blake3.hash([...res.answer, ...res.authority, ...res.additional].join('.')).toString('hex')
+    const oldData = blake3.hash([...res.answer, ...res.authority, ...res.additional].join('.')).toString('hex');
     const handler = async () => {
-      const update = await zone.resolve(name, type, origin)
-      const newData = blake3.hash([...update.answer, ...update.authority, ...update.additional].join('.')).toString('hex')
+      const update = await zone.resolve(name, type, origin);
+      const newData = blake3.hash([...update.answer, ...update.authority, ...update.additional].join('.')).toString('hex');
       if (oldData !== newData) {
-        console.log(`[hyperzone] received update : stale cache cleared.`);
-        cache.remove(id)
+        console.log('[hyperzone] received update : stale cache cleared.');
+        cache.remove(id);
       } else {
-        console.log(`[hyperzone] received update : cache still fresh.`);
-        zone.db.feed.update(handler)
+        console.log('[hyperzone] received update : cache still fresh.');
+        zone.db.feed.update(handler);
       }
-    }
-    zone.db.feed.update(handler)
-  })
+    };
+    zone.db.feed.update(handler);
+  });
 }
